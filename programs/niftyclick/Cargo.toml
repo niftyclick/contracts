@@ -1,0 +1,22 @@
+[package]
+name = "niftyclick"
+version = "0.1.0"
+description = "Mint NFT directly from your camera using SMS"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "niftyclick"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[profile.release]
+overflow-checks = true
+
+[dependencies]
+anchor-lang = "0.24.2"
