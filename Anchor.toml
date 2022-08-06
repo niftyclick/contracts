@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-niftyclick = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+niftyclick = "2eaxeLhmPps1oknT5M9n2gzmzfvowz49u23pFJy9Nkez"
 
 [registry]
 url = "https://anchor.projectserum.com"
@@ -9,6 +9,7 @@ url = "https://anchor.projectserum.com"
 [provider]
 cluster = "localnet"
 wallet = "/root/.config/solana/id.json"
+# wallet = "~/.config/solana/phantom.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

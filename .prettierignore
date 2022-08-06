@@ -5,3 +5,6 @@ node_modules
 dist
 build
 test-ledger
+README.md
+package.json
+yarn.lock

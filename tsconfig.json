@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"types": ["mocha", "chai"],
+		"resolveJsonModule": true,
 		"typeRoots": ["./node_modules/@types"],
 		"lib": ["es2015"],
 		"module": "commonjs",
@@ -8,4 +9,3 @@
 		"esModuleInterop": true
 	}
 }
-
