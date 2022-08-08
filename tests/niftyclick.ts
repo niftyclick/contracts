@@ -20,18 +20,17 @@ describe("Start program", async () => {
 
 	console.log("Program interacting : ", programID.toBase58());
 
-	const [linkAccount, linkAccountBump] =
-		await anchor.web3.PublicKey.findProgramAddress(
-			[Buffer.from("link_init"), provider.wallet.publicKey.toBuffer()],
-			programID
-		);
+	const [linkAccount, _] = await anchor.web3.PublicKey.findProgramAddress(
+		[Buffer.from("link_account"), provider.wallet.publicKey.toBuffer()],
+		programID
+	);
 
 	const added_content: String =
 		"https://media.giphy.com/media/lgcUUCXgC8mEo/giphy.gif";
 
 	it("Initialize PDA with 0 links.", async () => {
 		await program.methods
-			.initialize(linkAccountBump)
+			.initialize()
 			.accounts({
 				linkAccount,
 				user: provider.wallet.publicKey,
@@ -53,10 +52,17 @@ describe("Start program", async () => {
 
 		const account = await program.account.linkState.fetch(linkAccount);
 		assert.equal(1, account.links.length);
+		assert.equal(added_content, account.links[0]);
 	});
 
-	it("Ensure that the link is correct.", async () => {
-		const account = await program.account.linkState.fetch(linkAccount);
-		assert.equal(added_content, account.links[0]);
+	it("Cannot add too long links to PDA.", async () => {
+		await program.methods
+			.addLink("x".repeat(201))
+			.accounts({
+				linkAccount,
+			})
+			.rpc()
+			.then(() => assert.ok(false))
+			.catch(() => assert.ok(true));
 	});
 });
