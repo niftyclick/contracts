@@ -14,9 +14,8 @@ pub mod niftyclick {
     }
 
     pub fn add_link(ctx: Context<AddLink>, content_link : String) -> Result<()> {
-        if content_link.as_bytes().len() > 200 {
-            return Err(LinkError::AddLink.into());
-        }
+        require_keys_eq!(ctx.accounts.link_account.authority, ctx.accounts.user.key(), Unauthorized::AddLink);
+        require_gte!(200, content_link.as_bytes().len() , LinkError::AddLink);
         ctx.accounts.link_account.links.push(content_link);
         Ok(())
     }
@@ -44,6 +43,7 @@ pub struct Initialize<'info> {
 pub struct AddLink<'info> {
     #[account(mut)]
     link_account: Account<'info, LinkState>,
+    user: Signer<'info>,
 }
 
 #[account]
@@ -56,5 +56,11 @@ pub struct LinkState {
 #[error_code]
 pub enum LinkError {
     #[msg("Input link length is too long.")]
+    AddLink,
+}
+
+#[error_code]
+pub enum Unauthorized {
+    #[msg("Not the owner of the PDA Account.")]
     AddLink,
 }
