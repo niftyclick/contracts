@@ -9,6 +9,8 @@ describe("Start program", async () => {
 	const provider: anchor.AnchorProvider = anchor.AnchorProvider.env();
 	anchor.setProvider(provider);
 
+	console.log("Signing Public Key :", provider.wallet.publicKey.toBase58());
+
 	const programID = new anchor.web3.PublicKey(idl.metadata.address);
 	const program = new anchor.Program(
 		idl,
@@ -16,13 +18,18 @@ describe("Start program", async () => {
 		provider
 	) as Program<Niftyclick>;
 
+	console.log("Program interacting : ", programID.toBase58());
+
 	const [linkAccount, linkAccountBump] =
 		await anchor.web3.PublicKey.findProgramAddress(
 			[Buffer.from("link_init"), provider.wallet.publicKey.toBuffer()],
 			programID
 		);
 
-	it("Initialize PDA with 0 links", async () => {
+	const added_content: String =
+		"https://media.giphy.com/media/lgcUUCXgC8mEo/giphy.gif";
+
+	it("Initialize PDA with 0 links.", async () => {
 		await program.methods
 			.initialize(linkAccountBump)
 			.accounts({
@@ -36,9 +43,9 @@ describe("Start program", async () => {
 		assert.equal(0, account.links.length);
 	});
 
-	it("Adds a link to the buffer account", async () => {
+	it("Adds links to the PDA.", async () => {
 		await program.methods
-			.addLink("https://media.giphy.com/media/lgcUUCXgC8mEo/giphy.gif")
+			.addLink(added_content.toString())
 			.accounts({
 				linkAccount,
 			})
@@ -46,5 +53,10 @@ describe("Start program", async () => {
 
 		const account = await program.account.linkState.fetch(linkAccount);
 		assert.equal(1, account.links.length);
+	});
+
+	it("Ensure that the link is correct.", async () => {
+		const account = await program.account.linkState.fetch(linkAccount);
+		assert.equal(added_content, account.links[0]);
 	});
 });
