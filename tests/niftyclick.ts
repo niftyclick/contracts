@@ -4,7 +4,8 @@ import { Program } from "@project-serum/anchor";
 import { Niftyclick } from "../target/types/niftyclick";
 import fs from "fs";
 
-const pathToMyKeypair = process.env.HOME + "/.config/solana/id.json";
+// User who wants their account to be created
+const pathToMyKeypair = process.env.HOME + "/.config/solana/devnet.json";
 const keypairFile = fs.readFileSync(pathToMyKeypair);
 const secretKey = Buffer.from(JSON.parse(keypairFile.toString()));
 const signerKeypair = anchor.web3.Keypair.fromSecretKey(secretKey);
@@ -15,7 +16,7 @@ describe("Start program", async () => {
 	const provider = anchor.AnchorProvider.env();
 	anchor.setProvider(provider);
 
-	console.log("Signing Public Key :", provider.wallet.publicKey.toBase58());
+	console.log("Signing Public Key :", signerKeypair.publicKey.toBase58());
 
 	const programID = new anchor.web3.PublicKey(idl.metadata.address);
 	const program = new anchor.Program(
@@ -31,6 +32,8 @@ describe("Start program", async () => {
 		programID
 	);
 
+	console.log("Account to which data will be added :", linkAccount.toBase58());
+	
 	const hackerman = new anchor.web3.Keypair();
 	const added_content =
 		"https://media.giphy.com/media/lgcUUCXgC8mEo/giphy.gif";
@@ -40,7 +43,7 @@ describe("Start program", async () => {
 			.initialize()
 			.accounts({
 				linkAccount,
-				user: provider.wallet.publicKey,
+				user: signerKeypair.publicKey,
 				systemProgram: anchor.web3.SystemProgram.programId,
 			})
 			.signers([signerKeypair])
@@ -52,7 +55,7 @@ describe("Start program", async () => {
 
 	it("Adds links to the PDA.", async () => {
 		await program.methods
-			.addLink(added_content.toString())
+			.addLink(added_content)
 			.accounts({
 				linkAccount,
 				user: signerKeypair.publicKey,
@@ -62,8 +65,15 @@ describe("Start program", async () => {
 
 		const account = await program.account.linkState.fetch(linkAccount);
 		assert.equal(1, account.links.length);
-		assert.equal(added_content, account.links[0]);
 	});
+
+	it("Confirm content.", async () => {
+
+		const account = await program.account.linkState.fetch(linkAccount);
+		assert.equal(added_content,account.links[0])
+	});
+
+
 
 	it("Cannot add too long links to PDA.", async () => {
 		await program.methods
