@@ -1,5 +1,5 @@
-## Niftyclick
-#### Mint NFTs directly from your camera using SMS
-Built as part of Solana SummerCamp Hackathon '22.
+# Minting using Metaplex and Anchor
 
-- [Program on Solana Explorer](https://explorer.solana.com/address/2eaxeLhmPps1oknT5M9n2gzmzfvowz49u23pFJy9Nkez?cluster=devnet)
+- The function takes the NFT metadata like [this](https://zol3sde3elah2ldle7gmdcist23g2vm4y4wqbusntzotkfih.arweave.net/y5e5DJsiwH0s_ayfMwYk-SnrZtVZzHLQDSTZ5dNRUHA).
+- After minting, the NFT is visible at https://solscan.io/token/[mintKey]?cluster=devnet
+- Program is deployed [here](https://explorer.solana.com/address/GnRuvGpP3UeqfLrYHMetooHBXTJRhtMrmY6Gk2xxp9gB?cluster=devnet).

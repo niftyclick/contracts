@@ -1,15 +1,14 @@
 [features]
 seeds = false
 [programs.devnet]
-niftyclick = "2eaxeLhmPps1oknT5M9n2gzmzfvowz49u23pFJy9Nkez"
+metaplex_anchor_nft = "GnRuvGpP3UeqfLrYHMetooHBXTJRhtMrmY6Gk2xxp9gB"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
 cluster = "devnet"
-wallet = "/root/.config/solana/id.json"
-# Wallet used for testing is specified in the typescript file.
+wallet = "~/.config/solana/phantom.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
