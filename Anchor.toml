@@ -1,14 +1,14 @@
 [features]
 seeds = false
 [programs.devnet]
-niftyclick = "2eaxeLhmPps1oknT5M9n2gzmzfvowz49u23pFJy9Nkez"
+niftyclick = "AkB78wYxMJjweth3zCeDXGqNzRSYyJa96dg2MKXt4QT9"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
 cluster = "devnet"
-wallet = "/root/.config/solana/id.json"
+wallet = "~/.config/solana/phantom.json"
 # Wallet used for testing is specified in the typescript file.
 
 [scripts]

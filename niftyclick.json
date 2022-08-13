@@ -1,0 +1,95 @@
+{
+  "version": "0.1.0",
+  "name": "niftyclick",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "linkAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "addLink",
+      "accounts": [
+        {
+          "name": "linkAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "contentLink",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "LinkState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "links",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Unauthorized",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "AddLink"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AddLink",
+      "msg": "Input link length is too long."
+    }
+  ],
+  "metadata": {
+    "address": "AkB78wYxMJjweth3zCeDXGqNzRSYyJa96dg2MKXt4QT9"
+  }
+}
