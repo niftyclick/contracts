@@ -1,5 +1,5 @@
 # Minting using Metaplex and Anchor
 
-- The function takes the NFT metadata like [this](https://zol3sde3elah2ldle7gmdcist23g2vm4y4wqbusntzotkfih.arweave.net/y5e5DJsiwH0s_ayfMwYk-SnrZtVZzHLQDSTZ5dNRUHA).
-- After minting, the NFT is visible at https://solscan.io/token/[mintKey]?cluster=devnet
+- Takes in NFT metadata like [this](https://bafybeifp2rfphc5t34vxaxu7d4zb6xlmqk64gihdvgmkvavtmoxlbfgr3y.ipfs.dweb.link/metadata.json).
+- After minting, the NFT is visible at [Solana Explorer](https://explorer.solana.com/address/2FETxVbJAeSYqWbDqURjBMornPQMsuizD74UEGpvAN4o?cluster=devnet), where the address is the Mint key known after deploying.
 - Program is deployed [here](https://explorer.solana.com/address/GnRuvGpP3UeqfLrYHMetooHBXTJRhtMrmY6Gk2xxp9gB?cluster=devnet).

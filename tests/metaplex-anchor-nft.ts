@@ -108,8 +108,9 @@ describe("metaplex-anchor-nft", () => {
 		const tx = await program.methods
 			.mintNft(
 				mintKey.publicKey,
-				"https://arweave.net/y5e5DJsiwH0s_ayfMwYk-SnrZtVZzHLQDSTZ5dNRUHA",
-				"The Ape."
+				"https://bafybeifp2rfphc5t34vxaxu7d4zb6xlmqk64gihdvgmkvavtmoxlbfgr3y.ipfs.dweb.link/metadata.json",
+				"The PIe.",
+				"PI"
 			)
 			.accounts({
 				mintAuthority: wallet.publicKey,

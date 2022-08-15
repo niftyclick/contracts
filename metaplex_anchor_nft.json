@@ -68,6 +68,10 @@
         {
           "name": "title",
           "type": "string"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
         }
       ]
     }

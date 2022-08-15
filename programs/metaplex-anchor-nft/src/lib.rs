@@ -15,20 +15,21 @@ pub mod metaplex_anchor_nft {
         creator_key: Pubkey,
         uri: String,
         title: String,
+        symbol : String
     ) -> Result<()> {
-        msg!("Initializing Mint Ticket");
+        msg!("Initializing Mint Ticket.");
         let cpi_accounts = MintTo {
             mint: ctx.accounts.mint.to_account_info(),
             to: ctx.accounts.token_account.to_account_info(),
             authority: ctx.accounts.payer.to_account_info(),
         };
-        msg!("CPI Accounts Assigned");
+        msg!("CPI Accounts Assigned.");
         let cpi_program = ctx.accounts.token_program.to_account_info();
-        msg!("CPI Program Assigned");
+        msg!("CPI Program Assigned.");
         let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
-        msg!("CPI Context Assigned");
+        msg!("CPI Context Assigned.");
         token::mint_to(cpi_ctx, 1)?;
-        msg!("Token Minted !!!");
+        msg!("Token Minted.");
         let account_info = vec![
             ctx.accounts.metadata.to_account_info(),
             ctx.accounts.mint.to_account_info(),
@@ -44,16 +45,15 @@ pub mod metaplex_anchor_nft {
             mpl_token_metadata::state::Creator {
                 address: creator_key,
                 verified: false,
-                share: 100,
+                share: 10,
             },
             mpl_token_metadata::state::Creator {
                 address: ctx.accounts.mint_authority.key(),
                 verified: false,
-                share: 0,
+                share: 90,
             },
         ];
-        msg!("Creator Assigned");
-        let symbol = std::string::ToString::to_string("symb");
+        msg!("Creator Assigned.");
         invoke(
             &create_metadata_accounts_v2(
                 ctx.accounts.token_metadata_program.key(),
@@ -74,7 +74,7 @@ pub mod metaplex_anchor_nft {
             ),
             account_info.as_slice(),
         )?;
-        msg!("Metadata Account Created !!!");
+        msg!("Metadata Account Created.");
         let master_edition_infos = vec![
             ctx.accounts.master_edition.to_account_info(),
             ctx.accounts.mint.to_account_info(),
@@ -86,7 +86,7 @@ pub mod metaplex_anchor_nft {
             ctx.accounts.system_program.to_account_info(),
             ctx.accounts.rent.to_account_info(),
         ];
-        msg!("Master Edition Account Infos Assigned");
+        msg!("Master Edition Account Infos Assigned.");
         invoke(
             &create_master_edition_v3(
                 ctx.accounts.token_metadata_program.key(),
